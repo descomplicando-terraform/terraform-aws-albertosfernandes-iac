@@ -6,7 +6,7 @@ data "aws_ami" "template" {
     values = [var.image_id]
   }
 
-  owners = [ "amazon" ]
+  owners = ["amazon"]
 }
 
 locals {
@@ -26,13 +26,13 @@ resource "aws_instance" "instances" {
     for_each = var.vm_disks
     content {
       delete_on_termination = ebs_block_device.value.delete_on_termination
-      device_name = ebs_block_device.value.device_name
-      volume_size = ebs_block_device.value.volume_size
+      device_name           = ebs_block_device.value.device_name
+      volume_size           = ebs_block_device.value.volume_size
     }
   }
-## Arrumar depois fixando cada tag name com sua vm que será criada!!!
- tags = {
-  Name      = var.instance_name
-  Ambiente  = var.ambiente
- }
+  ## Arrumar depois fixando cada tag name com sua vm que será criada!!!
+  tags = {
+    Name     = var.instance_name
+    Ambiente = var.ambiente
+  }
 }
