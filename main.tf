@@ -23,12 +23,12 @@ resource "aws_instance" "instances" {
   instance_type = local.my_instance
   metadata_options {
     http_tokens = "required"
-  } 
-  
-  root_block_device {
-      encrypted = true
   }
-  
+
+  root_block_device {
+    encrypted = true
+  }
+
   dynamic "ebs_block_device" {
     for_each = var.vm_disks
     content {
