@@ -59,3 +59,41 @@ variable "ambiente" {
   description = "Valor da tag ambiente"
 }
 ```
+<!-- BEGIN_TF_DOCS -->
+## Requirements
+
+| Name | Version |
+|------|---------|
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.0 |
+
+## Providers
+
+| Name | Version |
+|------|---------|
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.85.0 |
+
+## Modules
+
+No modules.
+
+## Resources
+
+| Name | Type |
+|------|------|
+| [aws_instance.instances](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance) | resource |
+| [aws_ami.template](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ami) | data source |
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_ambiente"></a> [ambiente](#input\_ambiente) | Valor da tag ambiente | `string` | n/a | yes |
+| <a name="input_image_id"></a> [image\_id](#input\_image\_id) | Nome da imagem AMI na AWS | `string` | n/a | yes |
+| <a name="input_instance_name"></a> [instance\_name](#input\_instance\_name) | Nome da instância ec2 | `string` | n/a | yes |
+| <a name="input_instance_type"></a> [instance\_type](#input\_instance\_type) | Define o tipo de instância. Mininal = t2.micro, Medium = t3.micro, High = t4g.micro | `string` | n/a | yes |
+| <a name="input_vm_disks"></a> [vm\_disks](#input\_vm\_disks) | n/a | <pre>list(object({<br/>    delete_on_termination = bool<br/>    device_name           = string<br/>    volume_size           = number<br/>  }))</pre> | n/a | yes |
+
+## Outputs
+
+No outputs.
+<!-- END_TF_DOCS -->
