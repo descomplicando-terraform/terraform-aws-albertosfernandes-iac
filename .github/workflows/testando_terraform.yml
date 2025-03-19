@@ -1,0 +1,59 @@
+name: terraform-aws-modulo-albertosfernandes-iac
+run-name: ${{ github.actor}} iniciando testes de deploy módulo terraform
+on: [pull_request]
+jobs:
+  formatar-arquivos:
+    name: formatar-arquivos
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: terraform fmt
+        uses: dflook/terraform-fmt@v1
+        with:
+          path: .
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: terraform fmt
+          title: Reformat terraform files
+          body: Update Terraform files to canonical format using `terraform fmt`
+          branch: main
+
+  validar-sintaxe:
+    name: validar-sintaxe
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: terraform validate
+        uses: dflook/terraform-validate@v1
+        with:
+          path: .
+
+  tornar-seguro:
+    name: tornar-seguro
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@master
+      - name: tfsec
+        uses: aquasecurity/tfsec-action@v1.0.0
+
+  criar-docs:
+    name: criar-docs
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        ref: ${{ github.event.pull_request.head.ref }}
+
+    - name: Render terraform docs and push changes back to PR
+      uses: terraform-docs/gh-actions@main
+      with:
+        working-dir: .
+        output-file: README.md
+        output-method: inject
+        git-push: "true"
