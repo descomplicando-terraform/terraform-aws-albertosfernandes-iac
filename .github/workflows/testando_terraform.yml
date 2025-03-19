@@ -5,6 +5,9 @@ jobs:
   formatar-arquivos:
     name: formatar-arquivos
     runs-on: ubuntu-latest
+    permissions:                # Job-level permissions configuration starts here
+      contents: write           # 'write' access to repository contents
+      pull-requests: write      # 'write' access to pull requests
     steps:
       - name: baixando código
         uses: actions/checkout@v4
@@ -47,6 +50,9 @@ jobs:
   criar-docs:
     name: criar-docs
     runs-on: ubuntu-latest
+    permissions:                # Job-level permissions configuration starts here
+      contents: write           # 'write' access to repository contents
+      pull-requests: write      # 'write' access to pull requests
     steps:
     - uses: actions/checkout@v3
       with:
