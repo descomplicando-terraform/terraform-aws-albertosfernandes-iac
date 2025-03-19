@@ -6,7 +6,8 @@ jobs:
     name: formatar-arquivos
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: baixando código
+        uses: actions/checkout@v4
 
       - name: terraform fmt
         uses: dflook/terraform-fmt@v1
