@@ -8,6 +8,8 @@ jobs:
     steps:
       - name: baixando código
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
 
       - name: terraform fmt
         uses: dflook/terraform-fmt@v1
@@ -18,9 +20,8 @@ jobs:
         uses: peter-evans/create-pull-request@v5
         with:
           commit-message: terraform fmt
-          title: Reformat terraform files
-          body: Update Terraform files to canonical format using `terraform fmt`
-          branch: main
+          title: Refatorando arquivos terraform
+          body: Atualizando os arquivos terraform pós `terraform fmt`
 
   validar-sintaxe:
     name: validar-sintaxe
