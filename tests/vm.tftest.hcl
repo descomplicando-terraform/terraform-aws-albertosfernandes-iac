@@ -1,8 +1,8 @@
- variables {
-  image_id = "ami-018875e7376831abe"
+variables {
+  image_id      = "ami-018875e7376831abe"
   instance_type = "medium"
   instance_name = "teste-vm"
-  ambiente = "Dev"
+  ambiente      = "Dev"
   vm_disks = [{
     delete_on_termination = true
     device_name           = "/dev/xvda"
