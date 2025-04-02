@@ -1,0 +1,43 @@
+name: gerando uma nova release do terraform module
+run-name: ${{ github.actor}} solicitando uma nova release do terraform module
+on:
+  push:
+    branches:
+      - main
+jobs:
+  release-new-terraform-module:
+    name: release-new-terraform-module
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Get Latest Tag
+        id: get_latest_tag
+        run: echo "TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo 'v0.0.0')" >> $GITHUB_ENV
+
+      - name: Bump Version
+        id: bump_version
+        run: |
+          LATEST_TAG=${{ env.TAG }}
+          NEW_TAG=$(echo $LATEST_TAG | awk -F. '{print $1"."$2"."$3+1}')
+          echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
+
+      - name: Create Git Tag
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git tag ${{ env.NEW_TAG }}
+          git push origin ${{ env.NEW_TAG }}
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.NEW_TAG }}
+          release_name: "Release ${{ env.NEW_TAG }}"
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
