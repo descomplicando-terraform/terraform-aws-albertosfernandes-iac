@@ -19,8 +19,8 @@ locals {
 }
 
 resource "aws_instance" "instances" {
-  ami                = data.aws_ami.template.image_id
-  instance_type         = local.my_instance
+  ami           = data.aws_ami.template.image_id
+  instance_type = local.my_instance
   metadata_options {
     http_tokens = "required"
   }
